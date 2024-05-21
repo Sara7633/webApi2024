@@ -114,7 +114,7 @@ const update = async () => {
     try {
       
 
-        const id = localStorage.getItem("id");
+        const id =JSON.parse( localStorage.getItem("id"));
         const username = document.getElementById("txtUsernameUp").value
         const password = document.getElementById("passwordUp").value
         const firstName = document.getElementById("txtFirstNameUp").value
@@ -122,7 +122,6 @@ const update = async () => {
         const user = {
             username, password, firstName, lastName
         }
-        alert("id",id)
         const res = await fetch(`api/User/${id}`, {
             method: "PUT",
             body: JSON.stringify(user),
@@ -131,7 +130,11 @@ const update = async () => {
             }
 
         })
-        alert("עודכן")
+        if (res.ok) {
+            alert("עודכן")
+            window.location.replace("Products.html")
+        }
+        
     }
     catch (err) {
         alert(err)
