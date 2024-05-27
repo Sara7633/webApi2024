@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using Repository;
 using Service;
+using Microsoft.Extensions.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +21,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
-builder.Services.AddDbContext<_214346710DbContext>(options => options.UseSqlServer("Data Source=srv2\\PUPILS;Initial Catalog=214346710_DB;Trusted_Connection=True;TrustServerCertificate=True"));
+builder.Services.AddDbContext<_214346710DbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("School")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Host.UseNLog();

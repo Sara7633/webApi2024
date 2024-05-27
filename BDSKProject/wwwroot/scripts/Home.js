@@ -20,8 +20,10 @@ const register = async () => {
         const password = document.getElementById("password").value
         const firstName = document.getElementById("txtFirstName").value
         const lastName = document.getElementById("txtLastName").value
+        const email = document.getElementById("txtEmail").value
+        
         const user = {
-            username, password, firstName, lastName
+            username, password, firstName, lastName,email
         }
         const res = await fetch("api/User/register", {
             method: "POST",
@@ -34,10 +36,11 @@ const register = async () => {
         if (res.ok) {
             const data = await res.json()
 
-            alert("נרשמת בהצלחה למערכת")
+            alert("נרשמת בהצלחה למערכת") 
             localStorage.setItem("id", data.id)
             window.location.replace("Products.html")
         }
+        
         else alert("error")
     }
     catch (err) {
@@ -72,9 +75,7 @@ const login = async () => {
             alert(error)
         }
 }
-const checkPass = () => {
-    checkPassword()
-}
+
 
 const checkPassword = async() => {
     try {
@@ -89,7 +90,6 @@ const checkPassword = async() => {
         })
         if (res.ok) {
             const data = await res.json()
-            localStorage.setItem("id", data.id)
             if (data == 0) {
                 passColor.style.setProperty("background-color", "red")
             }
@@ -114,14 +114,26 @@ const update = async () => {
     try {
       
 
-        const id =JSON.parse( localStorage.getItem("id"));
+        const id =JSON.parse(localStorage.getItem("id"));
         const username = document.getElementById("txtUsernameUp").value
-        const password = document.getElementById("passwordUp").value
+        const password = document.getElementById("password").value
         const firstName = document.getElementById("txtFirstNameUp").value
         const lastName = document.getElementById("txtLastNameUp").value
-        const user = {
-            username, password, firstName, lastName
+        const email = document.getElementById("txtEmail").value
+        //console.log(id)
+        console.log(username)
+
+        console.log(password)
+        console.log(firstName)
+        console.log(lastName)
+
+        if (!username || !password) {
+            throw Error("username and password required")
         }
+        const user = {
+            username, password, firstName, lastName,email
+        }
+        
         const res = await fetch(`api/User/${id}`, {
             method: "PUT",
             body: JSON.stringify(user),

@@ -14,13 +14,16 @@
         <label for="txtUsernameUp">שם משתמש</label>
         <input id="txtUsernameUp" type="text" /><br />
         <label for="passwordUp">סיסמא</label>
-        <input id="passwordUp" type="password" /><br />
+        <input id="password" type="password" oninput="checkPassword()" />
+        <input id="passwordColor" disabled placeholder="חוזק סיסמא" /><br />
         <label for="txtFirstNameUp">שם פרטי</label>
         <input id="txtFirstNameUp" type="text" /><br />
         <label for="txtLastNameUp">שם משפחה</label>
         <input id="txtLastNameUp" type="text" /><br />
+        <label for="txtEmail">כתובת מייל</label>
+        <input id="txtEmail" type="email" />
         <button onclick="update()">עדכון</button>
-        <a class="shopmore" href="Products.html?fromShoppingBag=1">המשך בקניה</a>
+        <a class="shopmore" href="Products.html">המשך בקניה</a>
     </div>
 </body>
 </html>

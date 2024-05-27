@@ -1,10 +1,12 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.EntityFrameworkCore;
 using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +15,41 @@ namespace TestProject
 
     public class UserUnitTests
     {
+        [Fact]
+        public async Task TestRegister_NewUser_Success()
+        {
+            // Arrange
+            var mockDbContext = new Mock<_214346710DbContext>();
+
+            var user = new User { UserName = "newuser", Password = "password123", FirstName = "aaa", LastName = "aaa" };
+            var userReg = new User { UserName = "aaa", Password = "aaa", FirstName = "aaa", LastName = "aaa" };
+            mockDbContext.Setup(m => m.Users).ReturnsDbSet(new List<User> { user });
+            var userRepository = new UserRepository(mockDbContext.Object);
+
+            // Act
+            var result = await userRepository.Register(userReg);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(userReg.UserName, result.UserName);
+        }
+
+        [Fact]
+        public async Task TestRegister_NewUser_InSuccess()
+        {
+            // Arrange
+            var mockDbContext = new Mock<_214346710DbContext>();
+            var user = new User { UserName = "aaa", Password = "aaa", FirstName = "aaa", LastName = "aaa" };
+            var userReg = new User { UserName = "aaa", Password = "aaa", FirstName = "aaa", LastName = "aaa" };
+            mockDbContext.Setup(m => m.Users).ReturnsDbSet(new List<User> { user });
+            var service = new UserRepository(mockDbContext.Object);
+
+            // Act
+            var result = await service.Register(userReg);
+
+            // Assert
+            Assert.Null(result);
+        }
         [Fact]
         public async Task TestLogin_Successful()
         {
@@ -41,9 +78,9 @@ namespace TestProject
             // Arrange
             var mockUserContext = new Mock<_214346710DbContext>();
             var users = new List<User>
-        {
+            {
             new User { UserName = "testuser", Password = "password" }
-        };
+            };
 
             mockUserContext.Setup(x => x.Users).ReturnsDbSet(users);
 
@@ -55,5 +92,64 @@ namespace TestProject
             // Assert
             Assert.Null(user);
         }
+
+
+        [Fact]
+        public async Task Register_ExceptionThrown_ExceptionIsThrown()
+        {
+            // Arrange
+            var userContextMock = new Mock<_214346710DbContext>();
+            var user = new User { UserName = "testuser", Password = "password123" };
+            userContextMock.Setup(x => x.Users.AddAsync(It.IsAny<User>(), default)).ThrowsAsync(new Exception("Simulated exception"));
+
+            var userRepository = new UserRepository(userContextMock.Object);
+
+            // Act and Assert
+            await Assert.ThrowsAsync<Exception>(async () => await userRepository.Register(user));
+        }
+
+
+        [Fact]
+        public async Task TestUpdate_ExistingUser_Success()
+        {
+            // Arrange
+            int userId = 1;
+            var existingUser = new User { Id = userId, UserName = "olduser", Password = "oldpassword" };
+            var updatedUser = new User { Id = userId, UserName = "newuser", Password = "newpassword" };
+
+            var mockDbContext = new Mock<_214346710DbContext>();
+            mockDbContext.Setup(m => m.Users).ReturnsDbSet(new List<User> { existingUser });
+
+            var userRepository = new UserRepository(mockDbContext.Object);
+
+            // Act
+            var result = await userRepository.Update(userId, updatedUser);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(updatedUser.UserName, result.UserName);
+            Assert.Equal(updatedUser.Password, result.Password);
+        }
+        [Fact]
+        public async Task TestUpdate_UserNotFound_ThrowsException()
+        {
+            // Arrange
+            var nonExistingUserId = 2;
+            var existingUser = new User { Id = 1, UserName = "olduser", Password = "oldpassword" };
+            var updatedUser = new User { Id = nonExistingUserId, UserName = "newuser", Password = "newpassword" };
+
+            var mockDbContext = new Mock<_214346710DbContext>();
+            mockDbContext.Setup(m => m.Users).ReturnsDbSet(new List<User> { existingUser });
+
+            var userRepository = new UserRepository(mockDbContext.Object);
+
+            // Act and Assert
+            await Assert.ThrowsAsync<Exception>(async () =>
+            {
+                await userRepository.Update(nonExistingUserId, updatedUser);
+            });
+        }
+
+
     }
 }

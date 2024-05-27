@@ -5,7 +5,7 @@
     font-family: Arial, sans-serif;
 }
 
-/* Styling the input fields */
+ Styling the input fields 
 input {
     margin: 5px;
     padding: 7px;
@@ -14,7 +14,7 @@ input {
     width: 80%;
 }
 
-/* Styling the buttons */
+ Styling the buttons 
 button {
     padding: 8px;
     background-color: #007bff;
@@ -28,7 +28,7 @@ button {
         background-color: #0056b3;
     }
 
-/* Styling the link */
+ Styling the link 
 a {
     color: #007bff;
     text-decoration: none;
@@ -38,9 +38,9 @@ a {
         text-decoration: underline;
     }
 
-/* Styling the register section */
+ Styling the register section 
 #register {
-    display: none; /* Hide the register section initially */
+    display: none;  Hide the register section initially 
 }
 
 label {
@@ -48,7 +48,7 @@ label {
     margin-top: 10px;
 }
 
-/* Responsive design for smaller screens */
+ Responsive design for smaller screens 
 @media only screen and (max-width: 600px) {
     div {
         width: 80%;

@@ -63,14 +63,14 @@
             <label for="txtUsername">שם משתמש</label>
             <input id="txtUsername" type="text" />
             <label for="password">סיסמא</label>
-            <input id="password" type="password" onchange="checkPass()"/>
-            <button onclick="checkPass()">בדוק סיסמא</button>
-            <label for="passwordColor"></label>
-            <input id="passwordColor" />
+            <input id="password" type="password" oninput="checkPassword()" />
+            <input id="passwordColor" disabled placeholder="חוזק סיסמא"/>
             <label for="txtFirstName">שם פרטי</label>
             <input id="txtFirstName" type="text" />
             <label for="txtLastName">שם משפחה</label>
             <input id="txtLastName" type="text" />
+            <label for="txtEmail">כתובת מייל</label>
+            <input id="txtEmail" type="email" />
             <button onclick="register()">רישום</button>
         </div>
     </div>

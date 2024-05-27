@@ -135,6 +135,7 @@ async function placeOrder() {
         if (res.ok) {
             const data = await res.json()
             clearBasket()
+            alert("order number "+data.orderId+" was placed successfully")
         }
         else alert("error")
     }

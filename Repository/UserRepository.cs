@@ -13,6 +13,9 @@ namespace Repository
         {
             try
             {
+                User u =await userContext.Users.FirstOrDefaultAsync(e => e.UserName.Equals(user.UserName));
+                if (u != null)
+                    return null;
                 await userContext.Users.AddAsync(user);
                 await userContext.SaveChangesAsync();
                 return user;
@@ -21,31 +24,31 @@ namespace Repository
             {
                 throw new Exception(ex.Message);
             }
-
         }
-
-        public async Task<List<User>> GetAllUsers() {
-            return await userContext.Users.ToListAsync();
-        }
-
 
         public async Task<User> Update(int id, User user)
         {
-            List<User> users = await userContext.Users.ToListAsync();
-            User u = await userContext.Users.FirstOrDefaultAsync(uu => uu.Id == id);
-            u.UserName = user.UserName;
-            u.FirstName = user.FirstName;
-            u.LastName = user.LastName;
-            u.Password = user.Password;
-            Console.WriteLine("user", u.FirstName);
-            await userContext.SaveChangesAsync();
-            return u;
-            
+            try
+            {
+                List<User> users = await userContext.Users.ToListAsync();
+                User foundUser = await userContext.Users.FirstOrDefaultAsync(uu => uu.Id == id);
+                foundUser.UserName = user.UserName;
+                foundUser.FirstName = user.FirstName;
+                foundUser.LastName = user.LastName;
+                foundUser.Password = user.Password;
+                foundUser.Email = user.Email;
+                await userContext.SaveChangesAsync();
+                return foundUser;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
         }
 
         public async Task<User> Login(User user)
         {
-
             User userFound = await userContext.Users.FirstOrDefaultAsync(u => u.UserName.Equals(user.UserName.TrimEnd()));
             if (userFound != null)
             {
@@ -56,11 +59,5 @@ namespace Repository
             }
             return null;
         }
-
-       
-       
-       
-
-     
     }
 }

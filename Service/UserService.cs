@@ -32,6 +32,8 @@ namespace Service
 
         public int checkPassword(string password)
         {
+            if (password.Length == 0)
+                return 0;
             var result = Zxcvbn.Core.EvaluatePassword(password);
             int score = result.Score;
             return score;
