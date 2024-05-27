@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class RatingRepository:IRatingRepository
+    public class RatingRepository : IRatingRepository
     {
         public async Task<int> AddRating(Rating rating)
         {
-            
+
             string query = "INSERT INTO RATING(HOST, METHOD, [PATH],REFERER,USER_AGENT,Record_Date)" +
                            "VALUES(@HOST, @METHOD, @PATH, @REFERER, @USER_AGENT, @Record_Date)";
             using (SqlConnection cn = new SqlConnection("Data Source=SRV2\\PUPILS;Initial Catalog=214346710_DB;Integrated Security=True;Encrypt=False"))

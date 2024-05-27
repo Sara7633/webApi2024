@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 namespace BDSKProject
 {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
-    public class RoutingMiddleware
+    public class RatingMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public RoutingMiddleware(RequestDelegate next)
+        public RatingMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
-        public Task Invoke(HttpContext httpContext,IRatingService ratingService)
+        public Task Invoke(HttpContext httpContext, IRatingService ratingService)
         {
             Rating rating = new Rating()
             {
@@ -40,7 +40,7 @@ namespace BDSKProject
     {
         public static IApplicationBuilder UseRoutingMiddleware(this IApplicationBuilder builder)
         {
-            return builder.UseMiddleware<RoutingMiddleware>();
+            return builder.UseMiddleware<RatingMiddleware>();
         }
     }
 }

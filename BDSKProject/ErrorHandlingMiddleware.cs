@@ -24,7 +24,7 @@ namespace BDSKProject
             {
                 await _next(httpContext);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError($"Logged From My Middleware {e.Message}  {e.StackTrace}");
                 httpContext.Response.StatusCode = 500;

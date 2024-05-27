@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class RatingService:IRatingService
+    public class RatingService : IRatingService
     {
         private readonly IRatingRepository ratingRepository;
         public RatingService(IRatingRepository ratingRepository)

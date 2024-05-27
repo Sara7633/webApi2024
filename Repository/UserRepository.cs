@@ -45,16 +45,13 @@ namespace Repository
 
         public async Task<User> Login(User user)
         {
-            var users = await userContext.Users.ToListAsync();
-            //User userFound3 = users.FirstOrDefault(u => u.UserName.Equals(user.UserName));
-            //User userFound = users.Find(u => u.UserName.Equals(user.UserName));
 
-            User userFound2 = await userContext.Users.FirstOrDefaultAsync(u => u.UserName.Equals(user.UserName.TrimEnd()));
-            if (userFound2 != null)
+            User userFound = await userContext.Users.FirstOrDefaultAsync(u => u.UserName.Equals(user.UserName.TrimEnd()));
+            if (userFound != null)
             {
-                if (userFound2.Password.TrimEnd().Equals(user.Password))
+                if (userFound.Password.TrimEnd().Equals(user.Password))
                 {
-                    return userFound2;
+                    return userFound;
                 }
             }
             return null;
