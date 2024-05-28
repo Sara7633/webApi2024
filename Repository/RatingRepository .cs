@@ -19,12 +19,9 @@ namespace Repository
         }
         public async Task<int> AddRating(Rating rating)
         {
-            //"Data Source=SRV2\\PUPILS;Initial Catalog=214346710_DB;Integrated Security=True;Encrypt=False"
-            //"Data Source=srv2\\PUPILS;Initial Catalog=214346710_DB;Trusted_Connection=True;TrustServerCertificate=True"
-            string s = configuration.GetConnectionString("School");
             string query = "INSERT INTO RATING(HOST, METHOD, [PATH],REFERER,USER_AGENT,Record_Date)" +
                            "VALUES(@HOST, @METHOD, @PATH, @REFERER, @USER_AGENT, @Record_Date)";
-            using (SqlConnection cn = new SqlConnection(configuration.GetConnectionString("School")))
+            using (SqlConnection cn = new SqlConnection(configuration.GetConnectionString("School"))) 
             using (SqlCommand cmd = new SqlCommand(query, cn))
             {
                 cmd.Parameters.AddWithValue("@HOST", rating.Host);
@@ -33,14 +30,11 @@ namespace Repository
                 cmd.Parameters.AddWithValue("@REFERER", rating.Referer);
                 cmd.Parameters.AddWithValue("@USER_AGENT", rating.UserAgent);
                 cmd.Parameters.AddWithValue("@Record_Date", rating.RecordDate);
-
                 cn.Open();
                 int rowsAffected = cmd.ExecuteNonQuery();
                 cn.Close();
-
                 return rowsAffected;
             }
-
         }
     }
 }

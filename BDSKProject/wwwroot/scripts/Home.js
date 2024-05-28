@@ -10,42 +10,101 @@
         alert(ex)
     }
 }
+//const register = async () => {
+//    try {
+//        const passColor = document.getElementById("passwordColor")
+//        if (passColor.style.getPropertyValue("background-color") != "green") {
+//            throw Error("password not strong")
+//        }
+//        const username = document.getElementById("txtUsername").value
+//        const password = document.getElementById("password").value
+//        const firstName = document.getElementById("txtFirstName").value
+//        const lastName = document.getElementById("txtLastName").value
+//        const email = document.getElementById("txtEmail").value
+//        if (!username || !password) {
+//            throw Error("username and password required")
+//        }
+//        const user = {
+//            username, password, firstName, lastName,email
+//        }
+//        const res = await fetch("api/User/register", {
+//            method: "POST",
+//            body: JSON.stringify(user),
+//            headers: {
+//                'Content-Type': 'application/json'
+//            }
+
+//        })
+//        if (res.ok) {
+//            const data = await res.json()
+
+//            alert("נרשמת בהצלחה למערכת") 
+//            localStorage.setItem("id", data.id)
+//            window.location.replace("Products.html")
+//        }
+
+//        else alert("error")
+//    }
+//    catch (err) {
+//        alert(err)
+//    }
+//}
 const register = async () => {
     try {
-        const passColor = document.getElementById("passwordColor")
+        const passColor = document.getElementById("passwordColor");
+        const username = document.getElementById("txtUsername").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const firstName = document.getElementById("txtFirstName").value.trim();
+        const lastName = document.getElementById("txtLastName").value.trim();
+        const email = document.getElementById("txtEmail").value.trim();
+
+        // Check if username and password are provided
+        if (!username || !password) {
+            throw new Error("Username and password are required");
+        }
+
+        // Check password strength
         if (passColor.style.getPropertyValue("background-color") != "green") {
-            throw Error("password not strong")
+            throw new Error("Password strength is not sufficient");
         }
-        const username = document.getElementById("txtUsername").value
-        const password = document.getElementById("password").value
-        const firstName = document.getElementById("txtFirstName").value
-        const lastName = document.getElementById("txtLastName").value
-        const email = document.getElementById("txtEmail").value
-        
+
+        // Validate email format
+        if (email && !validateEmail(email)) {
+            throw new Error("Invalid email format");
+        }
+
         const user = {
-            username, password, firstName, lastName,email
-        }
+            username,
+            password,
+            firstName,
+            lastName,
+            email
+        };
+
         const res = await fetch("api/User/register", {
             method: "POST",
             body: JSON.stringify(user),
             headers: {
                 'Content-Type': 'application/json'
             }
+        });
 
-        })
         if (res.ok) {
-            const data = await res.json()
-
-            alert("נרשמת בהצלחה למערכת") 
-            localStorage.setItem("id", data.id)
-            window.location.replace("Products.html")
+            const data = await res.json();
+            localStorage.setItem("id", data.id);
+            alert("נרשמת בהצלחה למערכת");
+            window.location.replace("Products.html");
+        } else {
+            throw new Error("Registration failed");
         }
-        
-        else alert("error")
+    } catch (err) {
+        alert(err.message);
     }
-    catch (err) {
-        alert(err)
-    }
+}
+
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 }
 const login = async () => {
         try {
@@ -120,12 +179,6 @@ const update = async () => {
         const firstName = document.getElementById("txtFirstNameUp").value
         const lastName = document.getElementById("txtLastNameUp").value
         const email = document.getElementById("txtEmail").value
-        //console.log(id)
-        console.log(username)
-
-        console.log(password)
-        console.log(firstName)
-        console.log(lastName)
 
         if (!username || !password) {
             throw Error("username and password required")
@@ -146,7 +199,7 @@ const update = async () => {
             alert("עודכן")
             window.location.replace("Products.html")
         }
-        
+        console.log(res)
     }
     catch (err) {
         alert(err)
