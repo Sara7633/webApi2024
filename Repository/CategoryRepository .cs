@@ -1,13 +1,14 @@
-﻿
-
-using Entities;
+﻿using Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Repository
 {
     public class CategoryRepository : ICategoryRepository
     {
-        _214346710DbContext categoryContext;
+        private readonly _214346710DbContext categoryContext;
+
         public CategoryRepository(_214346710DbContext categoryContext)
         {
             this.categoryContext = categoryContext;
@@ -15,13 +16,7 @@ namespace Repository
 
         public async Task<List<Category>> GetAllCategories()
         {
-            var categories = await categoryContext.Categories.ToListAsync();
-            if (categories != null)
-            {
-                return categories;
-            }
-            return null;
+            return await categoryContext.Categories.ToListAsync();
         }
-}}
-
-
+    }
+}

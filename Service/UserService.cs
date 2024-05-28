@@ -13,20 +13,16 @@ namespace Service
         }
         public async Task<User> Register(User user)
         {
-            
             return await userRepository.Register(user);
-
         }
         public async Task<User> Login(User user)
         {
            User u=await userRepository.Login(user);
-
-            return u;
+           return u;
         }
 
         public async Task<User> Update(int id, User user)
         {
-
            return await userRepository.Update(id, user);
         }
 
@@ -35,8 +31,7 @@ namespace Service
             if (password.Length == 0)
                 return 0;
             var result = Zxcvbn.Core.EvaluatePassword(password);
-            int score = result.Score;
-            return score;
+            return result.Score;
         }
 
        

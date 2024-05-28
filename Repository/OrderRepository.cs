@@ -1,38 +1,40 @@
-﻿
-
-using Entities;
+﻿using Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class OrderRepository: IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
-        _214346710DbContext orderContext;
+        private readonly _214346710DbContext orderContext;
+
         public OrderRepository(_214346710DbContext orderContext)
         {
             this.orderContext = orderContext;
         }
+
         public async Task<Order> AddOrder(Order order, List<OrderItem> orderItems)
         {
             try
             {
-
                 await orderContext.Orders.AddAsync(order);
                 await orderContext.SaveChangesAsync();
+
                 foreach (var item in orderItems)
                 {
                     item.OrderId = order.OrderId;
                     await orderContext.OrderItems.AddAsync(item);
-                    await orderContext.SaveChangesAsync();
                 }
+
+                await orderContext.SaveChangesAsync();
                 return order;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-
         }
-       
     }
 }

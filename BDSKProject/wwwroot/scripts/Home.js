@@ -57,7 +57,7 @@ const register = async () => {
             throw new Error("Registration failed");
         }
     } catch (err) {
-        alert(err.message);
+        alert(err);
     }
 }
 
