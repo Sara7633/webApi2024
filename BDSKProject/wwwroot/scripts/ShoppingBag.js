@@ -114,6 +114,7 @@ async function placeOrder() {
     try {
         const UserId = localStorage.getItem("id")
         let basket = JSON.parse(localStorage.getItem("Basket " + localStorage.getItem("id")));
+        if (basket.length == 0) throw new Error("basket empty")
         let orderItems = []
         for (let i = 0; i < basket.length; i++) {
             orderItems.push({ ProductId: basket[i].prod.productId, Quantity: basket[i].quantity})

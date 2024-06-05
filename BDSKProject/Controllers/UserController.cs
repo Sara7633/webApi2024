@@ -37,8 +37,9 @@ namespace BDSKProject.Controllers
             return BadRequest();
         }
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login([FromBody] User user)
+        public async Task<ActionResult<User>> Login([FromBody] UserDTO userDTO)
         {
+            User user = mapper.Map<UserDTO, User>(userDTO);
             User userRes = await userService.Login(user);
             if (userRes != null)
             {
