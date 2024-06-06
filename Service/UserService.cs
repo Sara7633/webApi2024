@@ -17,13 +17,13 @@ namespace Service
         }
         public async Task<User> Login(User user)
         {
-           User u=await userRepository.Login(user);
-           return u;
+            User u = await userRepository.Login(user);
+            return u;
         }
 
         public async Task<User> Update(int id, User user)
         {
-           return await userRepository.Update(id, user);
+            return await userRepository.Update(id, user);
         }
 
         public int checkPassword(string password)
@@ -34,7 +34,9 @@ namespace Service
             return result.Score;
         }
 
-       
-       
+        public async Task<User> GetUserById(int id)
+        {
+            return await userRepository.GetUserById(id);
+        }
     }
 }
