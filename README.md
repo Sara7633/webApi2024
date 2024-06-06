@@ -2,7 +2,7 @@ All Products Store Project
 
 Overview
 
-Our project is a store selling furniture products. It is constructed using ASP.NET Core 5 based on the REST architecture.
+Our project is a store selling all sorts of products. It is constructed using ASP.NET Core 5 based on the REST architecture.
 
 
 Technologies Used:
