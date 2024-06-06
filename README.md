@@ -1,10 +1,10 @@
 # All Products Store Project
 
 ## Overview
-Our project is a store selling various types of products. It is constructed using ASP.NET Core 5 based on REST architecture.
+Our project is a store selling various types of products. It is constructed using ASP.NET Core 8 based on REST architecture.
 
 ## Technologies Used
-- **Backend Framework**: ASP.NET Core 5
+- **Backend Framework**: ASP.NET Core 8
 - **ORM**: Entity Framework (EF), DB-first approach
 - **Object Mapping**: AutoMapper
 - **Configuration Management**: Config files for managing connection strings
